@@ -1,18 +1,21 @@
 # AnalyticsService — SysPark
 
 **AnalyticsService** is a microservice that provides system-wide usage statistics for the SysPark platform.  
-This includes aggregated data such as the total number of users, boards, and tasks completed or pending.
+Currently, it returns mock data, but it is designed to integrate with other services (UserService, BoardService, TaskService) in the future.
 
 ---
 
 ##  Features
 
 - REST API built with **FastAPI**
-- Exposes `GET /api/statistics` for system-wide analytics
-- Ready for **Docker**, **CI/CD**, and **AWS EC2 deployment**
-- Clean and modular architecture
+- Exposes `GET /api/statistics` endpoint
+- Returns mock statistics as a JSON response
+- Containerized with **Docker**
+- Ready for **CI/CD** and **AWS EC2 deployment**
+- Clean, modular, and scalable architecture
 
 ---
+
 ##  Technologies Used
 
 | Tool / Framework | Purpose                     |
@@ -22,8 +25,8 @@ This includes aggregated data such as the total number of users, boards, and tas
 | Uvicorn          | ASGI server for FastAPI     |
 | Docker           | Containerization            |
 | GitHub Actions   | Continuous Integration (CI) |
-| PostgreSQL       | (planned) data source       |
-| AWS EC2          | (planned) deployment target |
+| PostgreSQL       | Planned future integration  |
+| AWS EC2          | Deployment environment      |
 
 ---
 
@@ -31,20 +34,21 @@ This includes aggregated data such as the total number of users, boards, and tas
 
 ```
 app/
-├── api/                # API routes
+├── api/                  # API routes
 │   └── routes.py
-├── models/             # Pydantic schemas
+├── models/               # (Optional) Pydantic schemas
 │   └── statistics.py
-├── services/           # Business logic
+├── services/             # Business logic
 │   └── analytics_service.py
-├── main.py             # FastAPI app entry point
+├── database.py           # DB connection (planned)
+├── main.py               # FastAPI app entry point
 ```
 
 ---
 
 ##  Docker
 
-> Build and run the service using Docker (once configured)
+> Build and run the service using Docker
 
 ```bash
 # Build Docker image
@@ -60,9 +64,10 @@ docker run -p 8000:8000 analytics-service
 
 ### `GET /api/statistics`
 
-Returns aggregated metrics about SysPark platform usage.
+Returns mock aggregated metrics about SysPark platform usage.
 
-**Sample Response:**
+#### Response Example:
+
 ```json
 {
   "total_users": 123,
@@ -72,24 +77,29 @@ Returns aggregated metrics about SysPark platform usage.
 }
 ```
 
+>  Note: These values are currently hardcoded. They will be dynamically calculated in future releases.
+
 ---
 
 ##  CI/CD (Planned)
 
-- GitHub Actions workflow for:
-  - Linting / testing
-  - Build & Docker push
-  - Deploy to AWS EC2
+GitHub Actions workflow will include:
+
+- Code linting and unit testing
+- Docker build & push
+- Auto-deploy to AWS EC2 via SSH
 
 ---
 
-##  Deployment (Planned)
+##  Deployment
 
-This service will be deployed to **AWS EC2**, accessible via:
+This service is deployed on **AWS EC2** and accessible at:
 
 ```bash
 https://analytics.syspark.cloud/api/statistics
 ```
+
+> Check DNS or IP mapping if not available yet.
 
 ---
 
@@ -101,4 +111,4 @@ https://analytics.syspark.cloud/api/statistics
 
 ##  License
 
-MIT — feel free to use, modify and distribute under the terms.
+MIT — feel free to use, modify, and distribute under the terms.
