@@ -39,9 +39,10 @@ jobs:
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/analytics-service:latest
 
-            # Stop and remove existing container (if any)
             docker stop analytics-api || true
             docker rm analytics-api || true
 
-            # Run the new container
-            docker run -d -p 8000:8000 --name analytics-api ${{ secrets.DOCKER_USERNAME }}/analytics-service:latest
+            docker run -d -p 8000:8000 \
+              --name analytics-api \
+              -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+              ${{ secrets.DOCKER_USERNAME }}/analytics-service:latest
